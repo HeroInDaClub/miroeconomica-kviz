@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Микроэкономика: веб-квесты и факты</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #a47764;
+      --bg: #f7f2ef;
+      --text: #333;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.1rem;
+    }
+    .section {
+      padding: 2rem 0;
+    }
+    .section + .section {
+      border-top: 1px solid #ddd;
+    }
+    .section h2 {
+      font-size: 1.75rem;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .quests {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      color: #fff;
+      background: var(--primary);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform .2s, background .3s;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: #8e644e;
+      transform: scale(1.05);
+    }
+
+    /* Факты */
+    #facts-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #fact-container {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      font-size: 2rem;
+      background: #fff;
+      padding: 2rem;
+      margin-bottom: 1rem;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      opacity: 0;
+      animation: fadeInUp .8s ease forwards;
+      text-align: center;
+    }
+
+    /* Квиз */
+    #quiz, #result {
+      display: none;
+      padding: 2rem 0;
+      animation: fadeIn .8s ease;
+    }
+    .progress-bar {
+      margin: 1rem 0 1.5rem;    /* <-- добавлен отступ сверху */
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: var(--primary);
+      transition: width 0.5s ease;
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .answers {
+      list-style: none;
+      margin-bottom: 1rem;
+      padding-left: 0;
+    }
+    .answers li {
+      margin-bottom: .75rem;
+    }
+    .answers input {
+      margin-right: .5rem;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Микроэкономика</h1>
+      <p>Читайте интересные факты и проходите квесты по темам!</p>
+    </header>
+
+    <div id="mainPage">
+      <!-- Интересные факты -->
+      <section class="section" id="facts-section">
+        <h2>Интересные факты</h2>
+        <div id="fact-container">
+          Микроэкономика изучает поведение отдельных агентов: домохозяйств и фирм.
+        </div>
+        <button id="next-fact-btn" class="btn">Узнать следующий факт</button>
+      </section>
+
+      <!-- Квесты -->
+      <section class="section">
+        <h2>Квесты по темам</h2>
+        <div class="quests">
+          <div class="card">
+            <h3>Спрос и предложение</h3>
+            <button class="btn start-quest" data-quest="0">Начать квест</button>
+          </div>
+          <div class="card">
+            <h3>Ценовая эластичность</h3>
+            <button class="btn start-quest" data-quest="1">Начать квест</button>
+          </div>
+          <div class="card">
+            <h3>Теория фирмы</h3>
+            <button class="btn start-quest" data-quest="2">Начать квест</button>
+          </div>
+          <div class="card">
+            <h3>Издержки и выручка</h3>
+            <button class="btn start-quest" data-quest="3">Начать квест</button>
+          </div>
+          <div class="card">
+            <h3>Совершенная конкуренция</h3>
+            <button class="btn start-quest" data-quest="4">Начать квест</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Экран квиза -->
+    <div id="quiz">
+      <button id="back-btn" class="btn">← Назад</button>
+      <div class="progress-bar"><div id="progress" class="progress"></div></div>
+      <div id="question-container"></div>
+      <button id="next-btn" class="btn" style="display:none;">Следующий</button>
+    </div>
+
+    <!-- Экран результата -->
+    <div id="result" style="text-align:center;">
+      <h2 id="score-title"></h2>
+      <p id="score-text"></p>
+      <button id="home-btn" class="btn">На главную</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Интересные факты ---
+      const facts = [
+        "Микроэкономика изучает поведение отдельных агентов.",
+        "Теория предельной полезности объясняет распределение бюджета.",
+        "Эластичность показывает чувствительность спроса.",
+        "Совершенная конкуренция – много фирм на рынке.",
+        "Монополия – одна фирма без заменителей.",
+        "Кривая спроса наклонена вниз из-за замещения.",
+        "Переменные издержки зависят от объема производства.",
+        "Средние издержки минимальны в точке оптимума.",
+        "Прибыль = выручка минус издержки.",
+        "В краткосрочном периоде один фактор фиксирован."
+      ];
+      let fi = 0;
+      const factEl = document.getElementById('fact-container');
+      document.getElementById('next-fact-btn').addEventListener('click', () => {
+        fi = (fi + 1) % facts.length;
+        factEl.classList.remove('fade-in'); void factEl.offsetWidth;
+        factEl.textContent = facts[fi];
+        factEl.classList.add('fade-in');
+      });
+      factEl.classList.add('fade-in');
+
+      // --- Полные вопросы для 5 квестов ---
+      const quests = [
+        // 0. Спрос и предложение
+        [
+          { question: "Спрос при снижении цены?", answers: ["Уменьшится","Увеличится","Не изменится","Непонятно"], correct: 1 },
+          { question: "Кривая предложения показывает?", answers: ["Цена и объем","Доход и спрос","Расходы и прибыль","Ничего"], correct: 0 },
+          { question: "Что происходит при росте дохода для нормального товара?", answers: ["Спрос растёт","Спрос падает","Спрос не меняется","Спрос сначала растёт, потом падает"], correct: 0 },
+          { question: "Точка равновесия – это?", answers: ["Цена, где спрос = предложение","Цена макс. прибыли","Цена мин. издержек","Цена макс. спроса"], correct: 0 },
+          { question: "При снижении цены ресурсов предложение...", answers: ["Растёт","Падает","Не меняется","Непредсказуемо"], correct: 0 },
+          { question: "Сдвиг кривой спроса вправо означает...", answers: ["Рост спроса","Падение спроса","Без изменений","Непонятно"], correct: 0 },
+          { question: "Что НЕ влияет на спрос?", answers: ["Цена субститутов","Численность населения","Издержки производства","Ожидания"], correct: 2 },
+          { question: "Эффект замещения влияет на...", answers: ["Сдвиг вдоль кривой спроса","Сдвиг кривой спроса","Сдвиг вдоль кривой предложения","Сдвиг кривой предложения"], correct: 0 },
+          { question: "Эластичность спроса по доходу – это % изменения спроса к % изменения...", answers: ["Дохода","Цены","Предложения","Издержек"], correct: 0 },
+          { question: "Если эластичность спроса = 0, спрос...", answers: ["Совершенно неэластичный","Единичный","Эластичный","Бесконечный"], correct: 0 }
+        ],
+        // 1. Ценовая эластичность
+        [
+          { question: "Эластичность спроса >1 означает...", answers: ["Эластичный спрос","Неэластичный","Единичный","Ни то ни другое"], correct: 0 },
+          { question: "Если эластичность предложения =0, предложение...", answers: ["Совершенно неэластично","Совершенно эластично","Единично эластично","Неопределённо"], correct: 0 },
+          { question: "Перекрестная эластичность >0 означает...", answers: ["Субституты","Комплементы","Независимые","Непонятно"], correct: 0 },
+          { question: "Эластичность по доходу >0 – товар...", answers: ["Нормальный","Низший","Субститут","Комплемент"], correct: 0 },
+          { question: "Эластичность по доходу <0 – товар...", answers: ["Низший","Нормальный","Нейтральный","Случайный"], correct: 0 },
+          { question: "Совершенно эластичный спрос – кривая...", answers: ["Горизонтальная","Вертикальная","Положительная","Негативная"], correct: 0 },
+          { question: "Совершенно неэластичный спрос – кривая...", answers: ["Вертикальная","Горизонтальная","Положительная","Негативная"], correct: 0 },
+          { question: "Эластичность спроса =1 – это...", answers: ["Единичная эластичность","Эластичный","Неэластичный","Случайный"], correct: 0 },
+          { question: "При эластичности спроса >1 выручка при снижении цены...", answers: ["Растёт","Падает","Не меняется","Непредсказуемо"], correct: 0 },
+          { question: "Эластичность спроса <1 – это...", answers: ["Неэластичный спрос","Эластичный","Единичный","Бесконечный"], correct: 0 }
+        ],
+        // 2. Теория фирмы
+        [
+          { question: "Производственная функция – это зависимость...", answers: ["Выпуска от факторов","Спроса от цены","Прибыли от затрат","Издержек от объёма"], correct: 0 },
+          { question: "Краткосрочный период – когда...", answers: ["Хотя бы один фактор фиксирован","Все факторы переменны","Нет факторов","Все факторы фиксированы"], correct: 0 },
+          { question: "Предельный продукт труда = ΔQ/ΔL или...", answers: ["ΔQ/ΔL","ΔL/ΔQ","Q/L","L/Q"], correct: 0 },
+          { question: "Закон убывающей отдачи означает...", answers: ["Падение предельного продукта","Рост предельного продукта","Падение среднего продукта","Рост среднего продукта"], correct: 0 },
+          { question: "Средний продукт = Q/L или...", answers: ["Q/L","ΔQ/ΔL","Q*L","L/Q"], correct: 0 },
+          { question: "Максимизация прибыли при MR = ...", answers: ["MC","ATC","AVC","P"], correct: 0 },
+          { question: "Кривая MC показывает...", answers: ["Предельные издержки","Средние издержки","Общие издержки","Постоянные издержки"], correct: 0 },
+          { question: "MC пересекает ATC в точке...", answers: ["Минимума ATC","Максимума ATC","Нуля","Средних ATC"], correct: 0 },
+          { question: "MR – это...", answers: ["Предельный доход","Общий доход","Средний доход","Постоянный доход"], correct: 0 },
+          { question: "При совершенной конкуренции MR =", answers: ["P","MC","ATC","AVC"], correct: 0 }
+        ],
+        // 3. Издержки и выручка
+        [
+          { question: "Постоянные издержки – это издержки, которые...", answers: ["Не зависят от объёма","Зависят линейно","Зависят экспоненциально","Не существуют"], correct: 0 },
+          { question: "Переменные издержки включают...", answers: ["Сырьё и оплату труда","Аренду","Амортизацию","Налоги"], correct: 0 },
+          { question: "Средние постоянные издержки = TFC/Q или...", answers: ["TFC/Q","TVC/Q","TC/Q","FC/Q"], correct: 0 },
+          { question: "Средние переменные издержки = TVC/Q или...", answers: ["TVC/Q","TFC/Q","TC/Q","FC/Q"], correct: 0 },
+          { question: "Общие издержки TC =", answers: ["TFC + TVC","TFC * TVC","TFC - TVC","TVC - TFC"], correct: 0 },
+          { question: "Максимизация прибыли при MR = MC или...", answers: ["Прибыли","Выручки","Издержек","Затрат"], correct: 0 },
+          { question: "Максимальная выручка достигается при MR =", answers: ["0","MC","TC","P"], correct: 0 },
+          { question: "AVC минимальны, когда MC пересекает AVC ...", answers: ["Снизу","Сверху","В точке максимума","В любой точке"], correct: 0 },
+          { question: "FC не влияет на...", answers: ["MC","AVC","VC","Q"], correct: 0 },
+          { question: "Выручка TR =", answers: ["P × Q","MR × Q","MC × Q","FC × Q"], correct: 0 }
+        ],
+        // 4. Совершенная конкуренция
+        [
+          { question: "Совершенная конкуренция – это рынок с...", answers: ["Многими фирмами и однородным товаром","Одной фирмой","Дифференциацией","Запретом входа"], correct: 0 },
+          { question: "Фирма-ценополучатель => P =", answers: ["MR","MC","ATC","AVC"], correct: 0 },
+          { question: "В долгосрочном периоде экономическая прибыль...", answers: ["Равна нулю","Положительна","Отрицательна","Неопределённа"], correct: 0 },
+          { question: "Свободный вход характерен для...", answers: ["Совершенной конкуренции","Монополии","Олигополии","Монопсонии"], correct: 0 },
+          { question: "Долгосрочная кривая предложения горизонтальна при...", answers: ["Постоянных издержках","Растущих издержках","Падающих издержках","Запрете входа"], correct: 0 },
+          { question: "Прибыль макс., когда MR = MC и P ... ATC", answers: [">","<","=","≠"], correct: 2 },
+          { question: "Точка безубыточности – когда P =", answers: ["ATC","AVC","MR","TC"], correct: 0 },
+          { question: "В краткосрочном периоде фирма может...", answers: ["Получать прибыль или убыток","Только прибыль","Только убыток","Ничего"], correct: 0 },
+          { question: "Несовершенная конкуренция возникает при...", answers: ["Дифференциации товара","Горизонтальной кривой предложения","Многих фирмах","Свободном входе"], correct: 0 },
+          { question: "Долгосрочное равновесие: P = MC = ...", answers: ["Минимум ATC","Максимум ATC","Средний доход","Валовые издержки"], correct: 0 }
+        ]
+      ];
+
+      // --- Интерфейс квиза ---
+      let cq = 0, ci = 0, score = 0;
+      const mainEl   = document.getElementById('mainPage');
+      const quizEl   = document.getElementById('quiz');
+      const resultEl = document.getElementById('result');
+      const qCont    = document.getElementById('question-container');
+      const prog     = document.getElementById('progress');
+      const nextBtn  = document.getElementById('next-btn');
+
+      document.querySelectorAll('.start-quest').forEach(btn => {
+        btn.addEventListener('click', () => {
+          cq = +btn.dataset.quest;
+          ci = 0; score = 0;
+          mainEl.style.display = 'none';
+          quizEl.style.display = 'block';
+          nextBtn.style.display = 'none';
+          prog.style.width = '0%';
+          showQuestion();
+        });
+      });
+
+      document.getElementById('back-btn').addEventListener('click', reset);
+      document.getElementById('home-btn').addEventListener('click', reset);
+
+      nextBtn.addEventListener('click', () => {
+        const sel = document.querySelector('input[name="answer"]:checked');
+        if (!sel) return;
+        if (+sel.value === quests[cq][ci].correct) score++;
+        ci++;
+        if (ci < quests[cq].length) showQuestion();
+        else showResult();
+        nextBtn.style.display = 'none';
+      });
+
+      function showQuestion() {
+        const q = quests[cq][ci];
+        prog.style.width = `${(ci / quests[cq].length) * 100}%`;
+        let html = `<div class="question">${q.question}</div><ul class="answers">`;
+        q.answers.forEach((opt, i) => {
+          html += `<li><label><input type="radio" name="answer" value="${i}"> ${opt}</label></li>`;
+        });
+        html += `</ul>`;
+        qCont.innerHTML = html;
+        document.querySelectorAll('input[name="answer"]')
+          .forEach(i => i.addEventListener('change', () => nextBtn.style.display = 'block'));
+      }
+
+      function showResult() {
+        quizEl.style.display = 'none';
+        resultEl.style.display = 'block';
+        const pct = Math.round(score / quests[cq].length * 100);
+        document.getElementById('score-title').textContent = `Ваш результат: ${pct}%`;
+        document.getElementById('score-text').textContent =
+          pct >= 80 ? 'Отлично!' : pct >= 50 ? 'Неплохо.' : 'Повторите материал.';
+      }
+
+      function reset() {
+        ci = 0; score = 0;
+        quizEl.style.display   = 'none';
+        resultEl.style.display = 'none';
+        mainEl.style.display   = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
